@@ -29,11 +29,11 @@ func create_template() -> void:
 				resource.save_to_wav(destination)
 			elif resource is AudioStreamMP3:
 				var file = FileAccess.open(destination, FileAccess.WRITE)
-				file.store_buffer(resource)
+				file.store_buffer(resource.data)
 				file.close()
 			elif resource is FontFile:
 				var file = FileAccess.open(destination, FileAccess.WRITE)
-				file.store_buffer(i.byte)
+				file.store_buffer(resource.data)
 				file.close()
 			else:
 				print("Missing:'" + i + "' to: '" + destination)
