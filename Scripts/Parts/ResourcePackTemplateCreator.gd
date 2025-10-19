@@ -13,20 +13,30 @@ func create_template() -> void:
 	get_directories("res://Assets", files, directories)
 	for i in directories:
 		DirAccess.make_dir_recursive_absolute(i.replace("res://Assets", Global.config_path.path_join("resource_packs/new_pack")))
-	for i in files:
+	for i in files: 
 		var destination = i
 		if destination.contains("res://"):
 			destination = i.replace("res://Assets", Global.config_path.path_join("resource_packs/new_pack"))
 		else:
 			destination = i.replace(Global.config_path.path_join("resource_packs/BaseAssets"), Global.config_path.path_join("resource_packs/new_pack"))
-		print("Copying '" + i + "' to: '" + destination)
-		var old_file = FileAccess.open(i, FileAccess.READ)
-		if old_file != null:
-			var new_file = FileAccess.open(destination, FileAccess.WRITE)
-			new_file.store_buffer(old_file.get_buffer(old_file.get_length()))
-			old_file.close()
-			new_file.close()
-			
+		if i.contains(".bgm") or i.contains(".json") or i.contains(Global.config_path):
+			DirAccess.copy_absolute(i, destination)
+		else:
+			var resource = load(i)
+			if resource is Texture:
+				resource.get_image().save_png(destination)
+			elif resource is AudioStreamWAV:
+				resource.save_to_wav(destination)
+			elif resource is AudioStreamMP3:
+				var file = FileAccess.open(destination, FileAccess.WRITE)
+				file.store_buffer(resource)
+				file.close()
+			elif resource is FontFile:
+				var file = FileAccess.open(destination, FileAccess.WRITE)
+				file.store_buffer(i.byte)
+				file.close()
+			else:
+				print("Missing:'" + i + "' to: '" + destination)
 	
 	var pack_info_path = Global.config_path.path_join("resource_packs/new_pack/pack_info.json")
 	DirAccess.make_dir_recursive_absolute(pack_info_path.get_base_dir())
