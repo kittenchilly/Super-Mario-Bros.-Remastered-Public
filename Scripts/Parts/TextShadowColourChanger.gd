@@ -24,6 +24,7 @@ func handle_shadow_colours() -> void:
 	for i in labels:
 		if is_instance_valid(i):
 			i.add_theme_color_override("font_shadow_color", text_shadow_colour)
+
 	if shadow_node != null:
 		shadow_node.modulate.a = (text_shadow_colour.a)
 		if shadow_node.material != null:

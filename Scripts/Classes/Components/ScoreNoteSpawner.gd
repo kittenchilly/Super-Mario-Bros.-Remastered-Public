@@ -11,6 +11,8 @@ func spawn_note(amount = 100, amount_2 := 0) -> void:
 		amount = amount_2
 	var note = SCORE_NOTE.instantiate()
 	note.global_position = owner.global_position + note_offset
+	if Settings.file.difficulty.super_luigi_bros == 1:
+		note.scale.x = -1
 	if add_score:
 		Global.score += amount
 	note.get_node("Container/Label").text = str(amount)
@@ -24,4 +26,6 @@ func play_death_sfx() -> void:
 func spawn_one_up_note() -> void:
 	var note = ONE_UP_NOTE.instantiate()
 	note.global_position = owner.global_position + note_offset
+	if Settings.file.difficulty.super_luigi_bros == 1:
+		note.scale.x = -1
 	owner.add_sibling(note)

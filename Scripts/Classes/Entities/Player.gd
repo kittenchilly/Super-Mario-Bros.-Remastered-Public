@@ -522,6 +522,8 @@ func handle_directions() -> void:
 		input_direction = 1
 	elif Global.player_action_pressed("move_left", player_id):
 		input_direction = -1
+	if Settings.file.difficulty.super_luigi_bros == 1:
+		input_direction = -input_direction
 	velocity_direction = sign(velocity.x)
 
 var use_big_collision := false

@@ -50,7 +50,6 @@ func handle_camera(delta: float) -> void:
 		do_limits()
 		camera.global_position = camera_position + camera_offset
 		return
-	
 	if not cam_locked:
 		if not sp_screen_scroll:
 			handle_horizontal_scrolling(delta)
@@ -62,6 +61,10 @@ func handle_camera(delta: float) -> void:
 	do_limits()
 	camera.global_position = camera_position + camera_offset
 	update_camera_barriers()
+	
+	if Settings.file.difficulty.super_luigi_bros == 1:
+		camera.scale.x = -1
+		camera.zoom.y = -1
 
 func update_camera_barriers() -> void:
 	if get_viewport() != null:

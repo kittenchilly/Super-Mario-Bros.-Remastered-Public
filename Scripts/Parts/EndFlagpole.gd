@@ -54,3 +54,5 @@ func give_points(player: Player) -> void:
 	else:
 		Global.score += nearest_value
 		$Score/Animation2.play("ScoreRise")
+		if Settings.file.difficulty.super_luigi_bros == 1:
+			$Score.scale.x = -1
